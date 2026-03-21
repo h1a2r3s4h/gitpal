@@ -1,11 +1,11 @@
 # 🤖 GitPal — AI-Powered Git Assistant CLI
-<!-- 
+
 > Stop writing commit messages manually. Let AI do it in 3 seconds.
 
 [![npm version](https://img.shields.io/npm/v/gitpal-cli.svg?style=flat-square)](https://www.npmjs.com/package/gitpal-cli)
 [![npm downloads](https://img.shields.io/npm/dm/gitpal-cli.svg?style=flat-square)](https://www.npmjs.com/package/gitpal-cli)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://opensource.org/licenses/MIT)
-[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?style=flat-square)](https://nodejs.org) -->
+[![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?style=flat-square)](https://nodejs.org)
 
 ---
 
@@ -193,6 +193,36 @@ gitpal config
 
 ---
 
+### `gitpal review` — AI Code Reviewer
+Reviews your staged code for bugs, security issues and bad practices before you commit — like having a senior developer on your team 24/7.
+
+```bash
+git add .
+gitpal review
+
+# 🐛 Bugs Found:
+# - No error handling on login failure
+#
+# 🔒 Security Issues:
+# - Password stored as plain text, use bcrypt
+#
+# 💡 Improvements:
+# - Add input validation for username and password
+#
+# ❌ Verdict: Do not commit
+
+# ? What would you like to do?
+# ✅ Looks good — generate commit message and commit
+# ❌ I will fix the issues first
+```
+
+**Options:**
+```bash
+gitpal review --review-only    # Only review, skip commit step
+```
+
+---
+
 ## 🔄 Full Daily Workflow
 
 ```
@@ -201,6 +231,8 @@ Morning — open your project
 Write some code (auth feature)
          ↓
 git add .
+gitpal review  →  AI checks for bugs and security issues
+         ↓
 gitpal commit  →  "feat(auth): add Google OAuth login"
          ↓
 Write more code (fix a bug)
@@ -228,6 +260,7 @@ gitpal changelog --ver 2.0.0  →  Full changelog ready
 | Spend 15 mins on PR description | Generated in 3 seconds |
 | Forget what you built last week | Plain English summary instantly |
 | Write changelog manually | Auto-generated from commits |
+| No code review before commit | AI catches bugs before they reach GitHub |
 | Works with one AI only | Works with 4 AI providers |
 
 ---
@@ -247,7 +280,8 @@ gitpal/
 │       ├── summary.js     ← gitpal summary
 │       ├── pr.js          ← gitpal pr
 │       ├── changelog.js   ← gitpal changelog
-│       └── config.js      ← gitpal config
+│       ├── config.js      ← gitpal config
+│       └── review.js      ← gitpal review
 └── tests/
     └── ai.test.js
 ```
@@ -258,7 +292,7 @@ gitpal/
 
 ```bash
 # Clone the repo
-git clone https://github.com/harshit_gangwar16/gitpal
+git clone https://github.com/h1a2r3s4h/gitpal
 cd gitpal
 
 # Install dependencies
@@ -292,7 +326,7 @@ Contributions are welcome! To add a new AI provider:
 
 Built by **Harshit Gangwar**
 
-- GitHub: [@harshit_gangwar16](https://github.com/harshit_gangwar16)
+- GitHub: [@h1a2r3s4h](https://github.com/h1a2r3s4h)
 - npm: [gitpal-cli](https://www.npmjs.com/package/gitpal-cli)
 
 ---
