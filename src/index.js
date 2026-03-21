@@ -5,6 +5,7 @@ import { summaryCommand } from './commands/summary.js';
 import { prCommand } from './commands/pr.js';
 import { changelogCommand } from './commands/changelog.js';
 import { configCommand } from './commands/config.js';
+import { reviewCommand } from './commands/review.js';
 
 const program = new Command();
 
@@ -46,6 +47,17 @@ program
   .description('Configure your AI provider and API key')
   .action(configCommand);
 
+program
+  .command('review')
+  .description('AI reviews your code for bugs and issues before committing')
+  .option('-r, --review-only', 'Only review, do not commit')
+  .action(reviewCommand);
+  
+program
+  .command('review')
+  .description('AI reviews your code for bugs before committing')
+  .option('-r, --review-only', 'Only review, do not commit')
+  .action(reviewCommand);
 program.parse(process.argv);
 
 // Show help if no command given
