@@ -1,0 +1,26 @@
+# Dependencies — never push this, it's 100MB+ of packages
+node_modules/
+
+# API keys — never push your secret keys to GitHub
+.env
+.env.local
+*.gitpal.json
+
+# Logs — useless noise
+*.log
+npm-debug.log*
+
+# Mac system file — useless on GitHub
+.DS_Store
+Thumbs.db
+
+# Build folders — generated files, not source code
+dist/
+build/
+
+# Test coverage reports
+coverage/
+
+# Editor settings — your personal VS Code settings
+.vscode/
+.idea/
