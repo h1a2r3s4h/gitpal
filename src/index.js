@@ -53,11 +53,7 @@ program
   .option('-r, --review-only', 'Only review, do not commit')
   .action(reviewCommand);
   
-program
-  .command('review')
-  .description('AI reviews your code for bugs before committing')
-  .option('-r, --review-only', 'Only review, do not commit')
-  .action(reviewCommand);
+
 program.parse(process.argv);
 
 // Show help if no command given
