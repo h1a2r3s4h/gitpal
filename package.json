@@ -1,6 +1,6 @@
 {
   "name": "gitpal",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI-powered Git assistant CLI",
   "main": "src/index.js",
   "bin": {
@@ -9,7 +9,12 @@
   "scripts": {
     "test": "node --experimental-vm-modules node_modules/.bin/jest"
   },
-  "keywords": ["git", "cli", "ai", "automation"],
+  "keywords": [
+    "git",
+    "cli",
+    "ai",
+    "automation"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
