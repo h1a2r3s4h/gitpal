@@ -26,5 +26,8 @@
     "ora": "^7.0.1",
     "simple-git": "^3.21.0"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "jest": "^30.3.0"
+  }
 }
