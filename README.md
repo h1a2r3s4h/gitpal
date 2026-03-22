@@ -1,6 +1,6 @@
-# 🤖 GitPal — AI-Powered Git Assistant CLI
+# 🤖 GitPal — AI Developer Teammate CLI
 
-> Stop writing commit messages manually. Let AI do it in 3 seconds.
+> Your AI-powered developer teammate that automates everything from writing code to deploying it.
 
 [![npm version](https://img.shields.io/npm/v/gitpal-cli.svg?style=flat-square)](https://www.npmjs.com/package/gitpal-cli)
 [![npm downloads](https://img.shields.io/npm/dm/gitpal-cli.svg?style=flat-square)](https://www.npmjs.com/package/gitpal-cli)
@@ -9,12 +9,13 @@
 
 ---
 
-![GitPal Demo](demo.gif)git add .
+![GitPal Demo](demo.gif)
+
+---
 
 ## 😤 The Problem Every Developer Faces
 
 ```bash
-# You just coded for 2 hours and now...
 git add .
 git commit -m "fix"        # 😭 lazy and meaningless
 git commit -m "changes"    # 😭 tells nothing
@@ -33,9 +34,7 @@ gitpal commit
 
 # ✔ Staged changes found.
 # ✔ Commit message generated!
-#
 # Suggested: feat(auth): add bcrypt password hashing to login endpoint
-#
 # ? Use this message? › Yes
 # ✅ Committed successfully!
 ```
@@ -65,8 +64,6 @@ gitpal commit
 
 ## 🤖 Supports 4 AI Providers
 
-Pick any one — all work perfectly:
-
 | Provider | Model | Cost | Speed |
 |---|---|---|---|
 | **Groq** | llama-3.3-70b | 🆓 Free | ⚡ Fastest |
@@ -74,11 +71,11 @@ Pick any one — all work perfectly:
 | **Anthropic** | claude-3-haiku | 💰 Free credits | ✅ Fast |
 | **OpenAI** | gpt-3.5-turbo | 💰 Paid | ✅ Fast |
 
-> 💡 Recommended for beginners: **Groq** — completely free, no credit card needed. Get your key at [console.groq.com](https://console.groq.com)
+> 💡 Recommended: **Groq** — completely free, no credit card needed. Get your key at [console.groq.com](https://console.groq.com)
 
 ---
 
-## 📖 All Commands
+## 📖 All 16 Commands
 
 ### `gitpal commit` — AI Commit Messages
 Reads your staged diff and generates a meaningful conventional commit message.
@@ -93,86 +90,228 @@ gitpal commit
 # ✅ Committed!
 ```
 
-**Options:**
+**Options:** `--yes` Skip confirmation and commit directly
+
+---
+
+### `gitpal review` — AI Code Reviewer
+Reviews your staged code for bugs, security issues and bad practices before you commit.
+
 ```bash
-gitpal commit --yes    # Skip confirmation, commit directly
+git add .
+gitpal review
+
+# 🐛 Bugs Found:
+# - No error handling on login failure
+# 🔒 Security Issues:
+# - Password stored as plain text, use bcrypt
+# 💡 Improvements:
+# - Add input validation for username and password
+# ❌ Verdict: Do not commit
+```
+
+**Options:** `--review-only` Only review, skip commit step
+
+---
+
+### `gitpal scan` — Full Codebase Security Scanner
+Scans your entire project for security vulnerabilities, bugs and code quality issues — like a free alternative to Snyk and SonarQube.
+
+```bash
+gitpal scan
+
+# 🔍 Scanning 24 files...
+# ❌ CRITICAL  src/auth.js line 12 — Password stored as plain text
+# 🔴 HIGH      src/api.js line 5  — API key hardcoded in source code
+# 🟡 MEDIUM    src/payment.js line 34 — No error handling on async function
+# ✅ Verdict: Fix 2 critical issues before deploying
+```
+
+**Options:** `--fix` Auto-fix safe issues | `--security` Security only | `--report` Save report
+
+---
+
+### `gitpal watch` — Auto Error Detection
+Watches your running app and automatically detects, explains and fixes errors in real time. Zero copy paste needed.
+
+```bash
+gitpal watch node index.js
+
+# Your app runs normally...
+# Error appears → GitPal detects it automatically
+#
+# 🚨 Error Detected!
+# 🐛 Cause: user object is undefined at line 34
+# ✅ Fix: add null check → if (user && user.id)
+# 💡 Learn: always check for null before accessing object properties
+```
+
+---
+
+### `gitpal explain` — Explain Any Code
+Explains any file, function or commit in plain English.
+
+```bash
+gitpal explain src/auth.js
+gitpal explain src/auth.js --function login
+gitpal explain a3f2c1
+
+# 📖 Explaining file: auth.js
+# This file handles all authentication logic.
+# Main functions: login(), register(), verifyToken(), logout()
+# Depends on: bcrypt, jsonwebtoken, User model
+```
+
+**Options:** `--function <name>` Explain a specific function
+
+---
+
+### `gitpal issue` — Open Source Contribution Assistant
+Fetches any GitHub issue, analyzes your local codebase, and tells you exactly which file to change and how to fix it.
+
+```bash
+gitpal issue 624 --repo chalk/chalk
+
+# ✔ Issue found: "$FORCE_COLOR works only as level 0 or 3"
+# 📁 Files to change: source/index.js
+# 🔧 How to fix: Add FORCE_COLOR validation in applyOptions()
+# 📝 Commit: fix: handle $FORCE_COLOR environment variable correctly
+# ? Create branch and generate PR description?
+```
+
+**Options:** `--repo <owner/repo>` GitHub repository
+
+---
+
+### `gitpal prep` — Interview Preparation
+Analyzes your project and generates interview questions, answers, elevator pitch and mock interview.
+
+```bash
+gitpal prep
+gitpal prep --company google
+gitpal prep --mock
+
+# 🎤 Your Elevator Pitch:
+# "I built GitPal — an AI Developer Teammate..."
+#
+# ❓ Technical Questions You Will Be Asked:
+# Q: How does gitpal commit work?
+# A: It reads git diff --staged, sends to AI...
+#
+# 🔥 Wow Moments to mention...
+# ⚠️  Weak Points and how to defend them...
+```
+
+**Options:** `--company <name>` Company-specific prep | `--mock` Start mock interview
+
+---
+
+### `gitpal api` — API Testing & Documentation
+Auto-discovers all API endpoints from your codebase, tests them, checks security and generates documentation.
+
+```bash
+gitpal api
+
+# 📍 Endpoints found:
+# GET     /api/users
+# POST    /api/login
+# DELETE  /api/user/:id
+#
+# ? Test all / Security scan / Generate docs
+```
+
+---
+
+### `gitpal deploy` — Deployment Pipeline
+Runs a complete pre-deployment checklist and deploys to your chosen platform.
+
+```bash
+gitpal deploy
+
+# ✅ Tests passed
+# ✅ Build successful
+# ✅ No console.logs found
+# ✅ .env file is safe
+# ? Deploy to: Vercel / Netlify / Heroku / npm
+# ✅ Deployed successfully!
+```
+
+**Options:** `--vercel` `--netlify` `--heroku` `--npm` `--skip-tests`
+
+---
+
+### `gitpal stats` — Coding Statistics
+Shows your coding patterns, productivity insights and AI analysis of your development habits.
+
+```bash
+gitpal stats
+
+# 📊 Your Coding Statistics
+# Total commits:     142
+# Most active day:   Tuesday
+# Most active time:  10:00
+# Top commit type:   feat (67%)
+# Most changed file: src/auth.js
+# 💡 AI Insights: You code best on weekday mornings...
+```
+
+**Options:** `--save` Save stats to file
+
+---
+
+### `gitpal testgen` — Auto Generate Tests
+Automatically generates comprehensive tests for any file using AI.
+
+```bash
+gitpal testgen src/auth.js
+gitpal testgen    # finds all untested files
+
+# 🧪 Generating tests for auth.js...
+# ✅ Tests generated!
+# Covers: login(), register(), verifyToken()
+# Includes: happy path, edge cases, error cases
+# ? Save to tests/auth.test.js?
 ```
 
 ---
 
 ### `gitpal summary` — Plain English Summary
-Summarizes your recent commits so you always know what you built.
+Summarizes your recent commits in plain English.
 
 ```bash
 gitpal summary --last 7
 
-# 📋 Summary of last 7 commits:
-# • Built user authentication system with JWT tokens
-# • Integrated Razorpay payment gateway
-# • Fixed cart total calculation for discounted items
-# • Added dark mode to the dashboard
-# • Improved API response time using Redis caching
+# 📋 Summary:
+# • Built user authentication with JWT
+# • Integrated payment gateway
+# • Fixed cart calculation bug
 ```
 
-**Options:**
-```bash
-gitpal summary --last 10    # Summarize last 10 commits
-```
+**Options:** `--last <number>` Number of commits
 
 ---
 
 ### `gitpal pr` — Pull Request Descriptions
-Generates a complete PR description from your branch diff. Copy-paste straight into GitHub.
+Generates a complete PR description from your branch diff.
 
 ```bash
 gitpal pr --base main
 
-# 📝 Pull Request Description:
-#
-# ## What changed
-# - Integrated Razorpay payment gateway
-# - Added webhook handler for payment confirmation
-# - Added retry logic for failed transactions
-#
-# ## Why
-# - App needed real payment processing for production launch
-#
-# ## Type of change
-# New feature
-#
-# ## Testing
-# Use test card: 4111 1111 1111 1111
+# 📝 ## What changed / ## Why / ## How to test
 ```
 
-**Options:**
-```bash
-gitpal pr --base develop    # Compare against develop branch
-```
+**Options:** `--base <branch>` Base branch to compare
 
 ---
 
 ### `gitpal changelog` — Release Changelog
-Auto-generates a formatted changelog entry from your commit history.
+Auto-generates a formatted changelog from commit history.
 
 ```bash
 gitpal changelog --ver 2.0.0
 
-# 📄 CHANGELOG v2.0.0:
-#
-# ## [2.0.0] - 2026-03-22
-#
-# ### Features
-# - Payment gateway integration
-# - Dark mode support
-# - User authentication system
-#
-# ### Bug Fixes
-# - Fixed cart calculation for discounts
-# - Fixed mobile layout on small screens
-#
-# ### Improvements
-# - 40% faster API response time
-# - Reduced bundle size by 20%
+# 📄 ## [2.0.0] - 2026-03-22
+# ### Features / ### Bug Fixes / ### Improvements
 ```
 
 ---
@@ -182,100 +321,20 @@ Interactive setup to configure your AI provider and API key.
 
 ```bash
 gitpal config
-
-# ? Choose your AI provider:
-# ❯ Groq — llama3 (Free & Ultra Fast)
-#   Anthropic (Claude)
-#   OpenAI (GPT-3.5)
-#   Google Gemini
-#
-# ? Enter your API key: ****************
+# ? Choose provider: Groq / Anthropic / OpenAI / Gemini
+# ? Enter API key: ****
 # ✅ Configuration saved!
 ```
 
 ---
 
-### `gitpal review` — AI Code Reviewer
-Reviews your staged code for bugs, security issues and bad practices before you commit — like having a senior developer on your team 24/7.
+### `gitpal learn` — Learn Your Own Code
+Deep learning mode — understand any part of your codebase with detailed explanations.
 
 ```bash
-git add .
-gitpal review
-
-# 🐛 Bugs Found:
-# - No error handling on login failure
-#
-# 🔒 Security Issues:
-# - Password stored as plain text, use bcrypt
-#
-# 💡 Improvements:
-# - Add input validation for username and password
-#
-# ❌ Verdict: Do not commit
-
-# ? What would you like to do?
-# ✅ Looks good — generate commit message and commit
-# ❌ I will fix the issues first
-```
-
-**Options:**
-```bash
-gitpal review --review-only    # Only review, skip commit step
-```
-
----
-
-### `gitpal explain` — Explain Any Code
-Explains any file, function or commit in plain English — perfect for understanding old code or teammate's changes.
-
-```bash
-# Explain an entire file
-gitpal explain src/auth.js
-
-# 📖 Explaining file: auth.js
-# ──────────────────────────────────────────────────
-# This file handles all authentication logic.
-# It has 4 main functions:
-# - login() — verifies user credentials
-# - register() — creates new user account
-# - verifyToken() — checks if JWT is valid
-# - logout() — clears user session
-#
-# Depends on: bcrypt, jsonwebtoken, User model
-```
-
-```bash
-# Explain a specific function
-gitpal explain src/payment.js --function processPayment
-
-# 📖 Explaining function: processPayment()
-# ──────────────────────────────────────────────────
-# This function handles Razorpay payment processing.
-# Step 1 — Creates payment order with amount
-# Step 2 — Sends to Razorpay API
-# Step 3 — Waits for webhook confirmation
-# Step 4 — Updates database on success
-#
-# Depends on: razorpay, axios, Order model
-```
-
-```bash
-# Explain any commit
-gitpal explain a3f2c1
-
-# 📖 Explaining commit: a3f2c1
-# ──────────────────────────────────────────────────
-# This commit added JWT authentication.
-# - Created login function with bcrypt password check
-# - Added JWT token generation on success
-# - Protected private routes with middleware
-```
-
-**Options:**
-```bash
-gitpal explain src/auth.js                        # Explain full file
-gitpal explain src/auth.js --function login       # Explain one function
-gitpal explain a3f2c1                             # Explain a commit
+gitpal learn src/
+# 📚 Learning your codebase...
+# Explains architecture, patterns and relationships
 ```
 
 ---
@@ -283,31 +342,28 @@ gitpal explain a3f2c1                             # Explain a commit
 ## 🔄 Full Daily Workflow
 
 ```
-Morning — open your project
-         ↓
-Write some code (auth feature)
-         ↓
+Morning
+  ↓
+Write code
+  ↓
+gitpal watch node app.js     →  auto-detects errors instantly
+  ↓
 git add .
-gitpal review  →  AI checks for bugs and security issues
-         ↓
-gitpal commit  →  "feat(auth): add Google OAuth login"
-         ↓
-Write more code (fix a bug)
-         ↓
-git add .
-gitpal commit  →  "fix(cart): resolve total miscalculation"
-         ↓
+gitpal review                →  AI reviews for bugs
+gitpal commit                →  AI writes commit message
+  ↓
 End of day
-gitpal summary  →  "Built OAuth, fixed cart bug, added tests"
-         ↓
+gitpal summary               →  see everything you built
+  ↓
 Ready to merge?
-gitpal pr  →  Full PR description, copy to GitHub
-         ↓
-Releasing v2.0?
-gitpal changelog --ver 2.0.0  →  Full changelog ready
-         ↓
-Understanding old code?
-gitpal explain src/auth.js  →  Plain English explanation
+gitpal pr                    →  full PR description
+  ↓
+Before deploying?
+gitpal scan                  →  security audit
+gitpal deploy                →  deployment pipeline
+  ↓
+Interview tomorrow?
+gitpal prep                  →  AI prepares you
 ```
 
 ---
@@ -317,12 +373,13 @@ gitpal explain src/auth.js  →  Plain English explanation
 | Without GitPal | With GitPal |
 |---|---|
 | `git commit -m "fix"` | `feat(auth): add JWT token refresh logic` |
-| Spend 15 mins on PR description | Generated in 3 seconds |
-| Forget what you built last week | Plain English summary instantly |
-| Write changelog manually | Auto-generated from commits |
-| No code review before commit | AI catches bugs before they reach GitHub |
-| Confused by old code | Explained in plain English instantly |
-| Works with one AI only | Works with 4 AI providers |
+| 15 mins writing PR | Generated in 3 seconds |
+| Confused by old code | Explained in plain English |
+| Manual security audit | Full scan in seconds |
+| Errors take hours to debug | Auto-detected and explained instantly |
+| Unknown what to fix in open source | Exact file and fix shown |
+| Deploy anxiety | Automated checklist every time |
+| Interview panic | AI prepares you completely |
 
 ---
 
@@ -331,19 +388,27 @@ gitpal explain src/auth.js  →  Plain English explanation
 ```
 gitpal/
 ├── bin/
-│   └── gitpal.js          ← CLI executable
+│   └── gitpal.js
 ├── src/
-│   ├── index.js           ← Main CLI entry (Commander)
+│   ├── index.js           ← Main CLI (Commander)
 │   ├── ai.js              ← Multi-provider AI router
 │   ├── git.js             ← Git operations
 │   └── commands/
 │       ├── commit.js      ← gitpal commit
+│       ├── review.js      ← gitpal review
+│       ├── scan.js        ← gitpal scan
+│       ├── watch.js       ← gitpal watch
+│       ├── explain.js     ← gitpal explain
+│       ├── issue.js       ← gitpal issue
+│       ├── prep.js        ← gitpal prep
+│       ├── api.js         ← gitpal api
+│       ├── deploy.js      ← gitpal deploy
+│       ├── stats.js       ← gitpal stats
+│       ├── testgen.js     ← gitpal testgen
 │       ├── summary.js     ← gitpal summary
 │       ├── pr.js          ← gitpal pr
 │       ├── changelog.js   ← gitpal changelog
-│       ├── config.js      ← gitpal config
-│       ├── review.js      ← gitpal review
-│       └── explain.js     ← gitpal explain
+│       └── config.js      ← gitpal config
 └── tests/
     └── ai.test.js
 ```
@@ -353,21 +418,11 @@ gitpal/
 ## 🛠 Local Development
 
 ```bash
-# Clone the repo
 git clone https://github.com/h1a2r3s4h/gitpal
 cd gitpal
-
-# Install dependencies
 npm install
-
-# Link globally for testing
 npm link
-
-# Configure AI provider
 gitpal config
-
-# Try it out
-git add .
 gitpal commit
 ```
 
@@ -375,12 +430,7 @@ gitpal commit
 
 ## 🤝 Contributing
 
-Contributions are welcome! To add a new AI provider:
-
-1. Open `src/ai.js`
-2. Add a new `callProviderName(prompt, apiKey)` function
-3. Add a new case in the `askAI()` switch statement
-4. Submit a PR
+To add a new AI provider — open `src/ai.js`, add a `callProviderName()` function and add a case in `askAI()`. Submit a PR!
 
 ---
 
