@@ -9,6 +9,8 @@
 
 ---
 
+![GitPal Demo](demo.gif)git add .
+
 ## 😤 The Problem Every Developer Faces
 
 ```bash
