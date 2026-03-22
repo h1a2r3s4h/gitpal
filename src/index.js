@@ -7,6 +7,14 @@ import { changelogCommand } from './commands/changelog.js';
 import { configCommand } from './commands/config.js';
 import { reviewCommand } from './commands/review.js';
 import { explainCommand } from './commands/explain.js';
+import { learnCommand } from './commands/learn.js';
+import { scanCommand } from './commands/scan.js';
+import { watchCommand } from './commands/watch.js';
+import { prepCommand } from './commands/prep.js';
+import { apiCommand } from './commands/api.js';
+import { deployCommand } from './commands/deploy.js';
+import { statsCommand } from './commands/stats.js';
+import { testgenCommand } from './commands/testgen.js';
 import { issueCommand, saveGithubToken } from './commands/issue.js';
 const program = new Command();
 
@@ -66,6 +74,59 @@ program
   .option('-r, --repo <repo>', 'GitHub repo (owner/repo)')
   .option('-t, --github-token <token>', 'GitHub personal access token')
   .action(issueCommand);
+
+  program
+  .command('learn [target]')
+  .description('Learn and understand your own code with AI')
+  .option('-q, --quiz', 'Take a quiz to test your knowledge')
+  .option('-c, --challenge', 'Get a coding challenge')
+  .action(learnCommand);
+
+  program
+  .command('scan')
+  .description('Scan entire codebase for security issues and bugs')
+  .option('--fix', 'Auto-fix safe issues')
+  .option('--security', 'Security issues only')
+  .option('--report', 'Save report to file')
+  .action(scanCommand);
+
+program
+  .command('watch <command...>')
+  .description('Watch your app and auto-detect errors')
+  .action((args) => watchCommand(args[0], args.slice(1), {}));
+
+program
+  .command('prep')
+  .description('AI-powered interview preparation')
+  .option('-c, --company <name>', 'Company name (google/amazon/startup)')
+  .action(prepCommand);
+
+program
+  .command('api')
+  .description('Test and document your API endpoints')
+  .action(apiCommand);
+
+program
+  .command('deploy')
+  .description('Run pre-deployment checks and deploy')
+  .option('--skip-tests', 'Skip running tests')
+  .option('--vercel', 'Deploy to Vercel')
+  .option('--netlify', 'Deploy to Netlify')
+  .option('--heroku', 'Deploy to Heroku')
+  .option('--npm', 'Publish to npm')
+  .action(deployCommand);
+
+program
+  .command('stats')
+  .description('View your coding statistics and patterns')
+  .option('--save', 'Save stats to file')
+  .action(statsCommand);
+
+program
+  .command('testgen [target]')
+  .description('Auto-generate tests for any file')
+  .action(testgenCommand);
+
 program.parse(process.argv);
 
 // Show help if no command given
