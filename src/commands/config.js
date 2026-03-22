@@ -19,6 +19,7 @@ const PROVIDERS = {
     label: "Groq — llama3-8b (Free & Ultra Fast)",
     keyHint: "Get free API key at console.groq.com",
   },
+  
 };
 
 export async function configCommand() {

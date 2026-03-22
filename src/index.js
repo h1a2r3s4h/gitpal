@@ -7,6 +7,7 @@ import { changelogCommand } from './commands/changelog.js';
 import { configCommand } from './commands/config.js';
 import { reviewCommand } from './commands/review.js';
 import { explainCommand } from './commands/explain.js';
+import { issueCommand, saveGithubToken } from './commands/issue.js';
 const program = new Command();
 
 console.log(chalk.cyan.bold('\n🤖 GitPal — Your AI Git Assistant\n'));
@@ -58,6 +59,13 @@ program
   .description('Explain any file or commit in plain English')
   .option('-f, --function <name>', 'Explain a specific function')
   .action(explainCommand);
+
+program
+  .command('issue <number>')
+  .description('Fetch and fix any GitHub issue with AI guidance')
+  .option('-r, --repo <repo>', 'GitHub repo (owner/repo)')
+  .option('-t, --github-token <token>', 'GitHub personal access token')
+  .action(issueCommand);
 program.parse(process.argv);
 
 // Show help if no command given
