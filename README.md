@@ -157,7 +157,7 @@ gitpal changelog --ver 2.0.0
 
 # 📄 CHANGELOG v2.0.0:
 #
-# ## [2.0.0] - 2026-03-21
+# ## [2.0.0] - 2026-03-22
 #
 # ### Features
 # - Payment gateway integration
@@ -223,6 +223,61 @@ gitpal review --review-only    # Only review, skip commit step
 
 ---
 
+### `gitpal explain` — Explain Any Code
+Explains any file, function or commit in plain English — perfect for understanding old code or teammate's changes.
+
+```bash
+# Explain an entire file
+gitpal explain src/auth.js
+
+# 📖 Explaining file: auth.js
+# ──────────────────────────────────────────────────
+# This file handles all authentication logic.
+# It has 4 main functions:
+# - login() — verifies user credentials
+# - register() — creates new user account
+# - verifyToken() — checks if JWT is valid
+# - logout() — clears user session
+#
+# Depends on: bcrypt, jsonwebtoken, User model
+```
+
+```bash
+# Explain a specific function
+gitpal explain src/payment.js --function processPayment
+
+# 📖 Explaining function: processPayment()
+# ──────────────────────────────────────────────────
+# This function handles Razorpay payment processing.
+# Step 1 — Creates payment order with amount
+# Step 2 — Sends to Razorpay API
+# Step 3 — Waits for webhook confirmation
+# Step 4 — Updates database on success
+#
+# Depends on: razorpay, axios, Order model
+```
+
+```bash
+# Explain any commit
+gitpal explain a3f2c1
+
+# 📖 Explaining commit: a3f2c1
+# ──────────────────────────────────────────────────
+# This commit added JWT authentication.
+# - Created login function with bcrypt password check
+# - Added JWT token generation on success
+# - Protected private routes with middleware
+```
+
+**Options:**
+```bash
+gitpal explain src/auth.js                        # Explain full file
+gitpal explain src/auth.js --function login       # Explain one function
+gitpal explain a3f2c1                             # Explain a commit
+```
+
+---
+
 ## 🔄 Full Daily Workflow
 
 ```
@@ -248,6 +303,9 @@ gitpal pr  →  Full PR description, copy to GitHub
          ↓
 Releasing v2.0?
 gitpal changelog --ver 2.0.0  →  Full changelog ready
+         ↓
+Understanding old code?
+gitpal explain src/auth.js  →  Plain English explanation
 ```
 
 ---
@@ -261,6 +319,7 @@ gitpal changelog --ver 2.0.0  →  Full changelog ready
 | Forget what you built last week | Plain English summary instantly |
 | Write changelog manually | Auto-generated from commits |
 | No code review before commit | AI catches bugs before they reach GitHub |
+| Confused by old code | Explained in plain English instantly |
 | Works with one AI only | Works with 4 AI providers |
 
 ---
@@ -281,7 +340,8 @@ gitpal/
 │       ├── pr.js          ← gitpal pr
 │       ├── changelog.js   ← gitpal changelog
 │       ├── config.js      ← gitpal config
-│       └── review.js      ← gitpal review
+│       ├── review.js      ← gitpal review
+│       └── explain.js     ← gitpal explain
 └── tests/
     └── ai.test.js
 ```
