@@ -36,17 +36,44 @@ function updateProgress(file, score, total) {
 // ─── MAIN COMMAND ─────────────────────────────────────────────────────────────
 
 export async function learnCommand(target, options) {
+  // Show progress if no target or 'progress' keyword
   if (!target || target === 'progress') {
     await showProgress();
     return;
   }
 
+  // Check if file exists
   if (!fs.existsSync(target)) {
     console.log(chalk.red(`❌ File not found: ${target}`));
     console.log(chalk.dim('\nExamples:'));
     console.log(chalk.cyan('  gitpal learn src/commands/commit.js'));
     console.log(chalk.cyan('  gitpal learn src/ai.js'));
     console.log(chalk.cyan('  gitpal learn progress'));
+    process.exit(1);
+  }
+
+  // Check if target is a directory — show helpful message
+  if (fs.statSync(target).isDirectory()) {
+    console.log(chalk.yellow(`\n⚠️  "${target}" is a folder. Please specify a file.\n`));
+    console.log(chalk.dim('Available files to learn:\n'));
+
+    function listFiles(dir) {
+      try {
+        fs.readdirSync(dir).forEach(entry => {
+          const fullPath = path.join(dir, entry);
+          const stat = fs.statSync(fullPath);
+          if (stat.isDirectory() && !['node_modules', '.git', 'dist', 'build'].includes(entry)) {
+            listFiles(fullPath);
+          } else if (entry.endsWith('.js') && !entry.includes('test') && !entry.includes('spec')) {
+            console.log(chalk.cyan(`  gitpal learn ${fullPath}`));
+          }
+        });
+      } catch {}
+    }
+
+    listFiles(target);
+    console.log(chalk.dim('\nOr check your progress:'));
+    console.log(chalk.cyan('  gitpal learn progress\n'));
     process.exit(1);
   }
 
@@ -394,8 +421,11 @@ async function showProgress() {
   console.log(chalk.dim('─'.repeat(50)));
 
   if (files.length === 0) {
-    console.log(chalk.yellow('No progress yet. Start with:'));
-    console.log(chalk.cyan('gitpal learn src/commands/commit.js\n'));
+    console.log(chalk.yellow('\nNo progress yet. Start with:\n'));
+    console.log(chalk.cyan('  gitpal learn src/ai.js'));
+    console.log(chalk.cyan('  gitpal learn src/git.js'));
+    console.log(chalk.cyan('  gitpal learn src/index.js'));
+    console.log(chalk.cyan('  gitpal learn src/commands/commit.js\n'));
     return;
   }
 
@@ -433,12 +463,16 @@ async function showProgress() {
     console.log(chalk.red('❌ Need more study before interview.'));
   }
 
-  const notStudied = ['commit.js', 'ai.js', 'git.js', 'review.js']
+  const notStudied = ['commit.js', 'ai.js', 'git.js', 'review.js', 'scan.js']
     .filter(f => !files.includes(f));
 
   if (notStudied.length > 0) {
-    console.log(chalk.dim(`\n💡 Study next: src/commands/${notStudied[0]}`));
-    console.log(chalk.cyan(`gitpal learn src/commands/${notStudied[0]}\n`));
+    console.log(chalk.dim(`\n💡 Study next:`));
+    notStudied.slice(0, 3).forEach(f => {
+      const filePath = f === 'ai.js' || f === 'git.js' ? `src/${f}` : `src/commands/${f}`;
+      console.log(chalk.cyan(`  gitpal learn ${filePath}`));
+    });
+    console.log('');
   }
 }
 

@@ -15,7 +15,9 @@ import { apiCommand } from './commands/api.js';
 import { deployCommand } from './commands/deploy.js';
 import { statsCommand } from './commands/stats.js';
 import { testgenCommand } from './commands/testgen.js';
-import { issueCommand, saveGithubToken } from './commands/issue.js';
+import { issueCommand } from './commands/issue.js';
+import { askCommand } from './commands/ask.js';
+
 const program = new Command();
 
 console.log(chalk.cyan.bold('\n🤖 GitPal — Your AI Git Assistant\n'));
@@ -61,12 +63,17 @@ program
   .description('AI reviews your code for bugs and issues before committing')
   .option('-r, --review-only', 'Only review, do not commit')
   .action(reviewCommand);
-  
+
 program
   .command('explain <target>')
   .description('Explain any file or commit in plain English')
   .option('-f, --function <name>', 'Explain a specific function')
   .action(explainCommand);
+
+program
+  .command('ask <query...>')
+  .description('Ask questions about your codebase using AI + retrieval')
+  .action((queryParts) => askCommand(queryParts.join(' ')));
 
 program
   .command('issue <number>')
@@ -75,14 +82,14 @@ program
   .option('-t, --github-token <token>', 'GitHub personal access token')
   .action(issueCommand);
 
-  program
+program
   .command('learn [target]')
   .description('Learn and understand your own code with AI')
   .option('-q, --quiz', 'Take a quiz to test your knowledge')
   .option('-c, --challenge', 'Get a coding challenge')
   .action(learnCommand);
 
-  program
+program
   .command('scan')
   .description('Scan entire codebase for security issues and bugs')
   .option('--fix', 'Auto-fix safe issues')
@@ -129,7 +136,6 @@ program
 
 program.parse(process.argv);
 
-// Show help if no command given
 if (!process.argv.slice(2).length) {
   program.outputHelp();
 }
