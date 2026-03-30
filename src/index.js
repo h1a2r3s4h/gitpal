@@ -78,8 +78,8 @@ program
 program
   .command('issue <number>')
   .description('Fetch and fix any GitHub issue with AI guidance')
-  .option('-r, --repo <repo>', 'GitHub repo (owner/repo)')
-  .option('-t, --github-token <token>', 'GitHub personal access token')
+  .option('--repo <repo>', 'Specify repo (owner/repo)')
+  .option('-o, --oss', 'Enable OSS Copilot mode')
   .action(issueCommand);
 
 program
@@ -133,6 +133,8 @@ program
   .command('testgen [target]')
   .description('Auto-generate tests for any file')
   .action(testgenCommand);
+  
+
 
 program.parse(process.argv);
 
